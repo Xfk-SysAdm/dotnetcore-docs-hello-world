@@ -1,12 +1,42 @@
-﻿@page
-@model IndexModel
-@{    
-    ViewData["Title"] = "Home page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Hallo Hanan das ist meine Homepage</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Home page - dotnetcoresample</title>
+</head>
+<body>
+<nav>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/Privacy">Privacy</a></li>
+</ul>
+</nav>
+ 
+    <h1>Hallo Hanan das ist meine Homepage</h1>
+<p id="ip-info">Checking your IP version…</p>
+ 
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <hr />
-    <div>Host operating system: @Model.OSVersion</div>
-</div>
+<hr />
+<footer>
+<p>Host operating system: Microsoft Windows 10.0.20348</p>
+<p>© 2022 – dotnetcoresample – <a href="/Privacy">Privacy</a></p>
+</footer>
+ 
+    <script>
+        (async function detectIPVersion() {
+            try {
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                const ip = data.ip;
+                const ipType = ip.includes(':') ? 'IPv6' : 'IPv4';
+                document.getElementById('ip-info').textContent =
+                    `Your IP is ${ip} and it is ${ipType}.`;
+            } catch (err) {
+                document.getElementById('ip-info').textContent =
+                    'Unable to detect IP version.';
+                console.error('IP detection error:', err);
+            }
+        })();
+</script>
+</body>
+</html>
